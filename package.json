@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "deploy": "echo 'Deployment handled by hosting provider' && exit 0",
     "preview": "vite preview"
   },
   "dependencies": {
