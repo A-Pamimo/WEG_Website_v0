@@ -33,7 +33,3 @@ This codebase represents the firm's digital presence, focusing on a **"Corporate
 *   **Navy:** `#051C2C` (Primary Brand)
 *   **Gold:** `#C5A065` (Accent/Selection)
 *   **Slate:** `#333333` (Body Text)
-
-## ⚠️ Known Issues (v0 Audit)
-*   **Routing:** Currently uses a lightweight hash-based router (`window.location.hash`).
-*   **Performance:** Tailwind is loaded via CDN script, which is not optimized for production performance.
