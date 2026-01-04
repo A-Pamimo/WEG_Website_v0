@@ -4,7 +4,7 @@
 
 World's Edge Group (WEG) is a strategic advisory firm designed for the "ambitious operator in a skeptical world." We help public sector leaders, non-profit executives, and boards move from intuition to evidence by providing rigorous economic analysis and decision briefs.
 
-This codebase represents the firm's digital presence, focusing on a **"Corporate Editorial"** aesthetic that blends the authority of a McKinsey whitepaper with the responsiveness of a modern web application.
+This codebase represents the firm's digital presence, focusing on a **"Corporate Editorial"** aesthetic.
 
 ## 🏗 Tech Stack
 *   **Framework:** React 19 + Vite
