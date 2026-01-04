@@ -1,20 +1,39 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# World's Edge Group
 
-# Run and deploy your AI Studio app
+**"Turning data into decisions."**
 
-This contains everything you need to run your app locally.
+World's Edge Group (WEG) is a strategic advisory firm designed for the "ambitious operator in a skeptical world." We help public sector leaders, non-profit executives, and boards move from intuition to evidence by providing rigorous economic analysis and decision briefs.
 
-View your app in AI Studio: https://ai.studio/apps/drive/1zE5q0Vxh4LHoch4BiwWTRxgpcA_oIT2k
+This codebase represents the firm's digital presence, focusing on a **"Corporate Editorial"** aesthetic that blends the authority of a McKinsey whitepaper with the responsiveness of a modern web application.
 
-## Run Locally
+## 🏗 Tech Stack
+*   **Framework:** React 19 + Vite
+*   **Styling:** Tailwind CSS (via CDN for v0 prototyping)
+*   **Typography:** Inter (Sans), Playfair Display (Serif), JetBrains Mono (Code)
+*   **Icons:** Lucide React
 
-**Prerequisites:**  Node.js
+## 🚀 Getting Started
 
+1.  **Install Dependencies**
+    ```bash
+    npm install
+    ```
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+2.  **Run Development Server**
+    ```bash
+    npm run dev
+    ```
+
+3.  **Build for Production**
+    ```bash
+    npm run build
+    ```
+
+## 🎨 Design System
+*   **Navy:** `#051C2C` (Primary Brand)
+*   **Gold:** `#C5A065` (Accent/Selection)
+*   **Slate:** `#333333` (Body Text)
+
+## ⚠️ Known Issues (v0 Audit)
+*   **Routing:** Currently uses a lightweight hash-based router (`window.location.hash`).
+*   **Performance:** Tailwind is loaded via CDN script, which is not optimized for production performance.
