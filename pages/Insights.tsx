@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { SEO } from '../components/SEO';
 import { INSIGHTS } from '../constants';
 import { BlogPost } from '../types';
 import { ChevronLeft, Clock, Tag } from 'lucide-react';
@@ -22,75 +23,76 @@ export const Insights: React.FC = () => {
   if (selectedPost) {
     return (
       <div className="pt-24 pb-20 bg-white min-h-screen fade-in">
+        <SEO title={selectedPost.title} description={selectedPost.excerpt} />
         {/* Sticky Back Button */}
         <div className="sticky top-20 z-40 bg-white/95 backdrop-blur border-b border-gray-100 px-6 py-4 mb-12">
-           <div className="max-w-3xl mx-auto">
-             <button onClick={() => setSelectedPost(null)} className="flex items-center gap-2 text-sm font-bold text-weg-blue hover:text-weg-navy transition-colors">
-               <ChevronLeft size={16} /> Back to Insights
-             </button>
-           </div>
+          <div className="max-w-3xl mx-auto">
+            <button onClick={() => setSelectedPost(null)} className="flex items-center gap-2 text-sm font-bold text-weg-blue hover:text-weg-navy transition-colors">
+              <ChevronLeft size={16} /> Back to Insights
+            </button>
+          </div>
         </div>
 
         <article className="max-w-3xl mx-auto px-6">
-           {/* Header */}
-           <div className="mb-10 text-center">
-             <div className="flex justify-center items-center gap-4 text-xs font-bold uppercase tracking-wider text-gray-400 mb-6">
-               <span className="flex items-center gap-1"><Tag size={12} /> {selectedPost.category}</span>
-               <span className="w-1 h-1 bg-gray-300 rounded-full"></span>
-               <span className="flex items-center gap-1"><Clock size={12} /> {selectedPost.readTime}</span>
-             </div>
-             <h1 className="font-serif text-4xl md:text-5xl text-weg-navy leading-tight mb-6">
-               {selectedPost.title}
-             </h1>
-             
-             {/* Author Tag */}
-             <div className="flex justify-center items-center gap-2 mb-8 text-sm">
-                <span className="text-gray-500">Authored by</span>
-                <span className="font-bold text-weg-navy border-b border-weg-gold pb-0.5">{selectedPost.author}</span>
-             </div>
+          {/* Header */}
+          <div className="mb-10 text-center">
+            <div className="flex justify-center items-center gap-4 text-xs font-bold uppercase tracking-wider text-gray-400 mb-6">
+              <span className="flex items-center gap-1"><Tag size={12} /> {selectedPost.category}</span>
+              <span className="w-1 h-1 bg-gray-300 rounded-full"></span>
+              <span className="flex items-center gap-1"><Clock size={12} /> {selectedPost.readTime}</span>
+            </div>
+            <h1 className="font-serif text-4xl md:text-5xl text-weg-navy leading-tight mb-6">
+              {selectedPost.title}
+            </h1>
 
-             <p className="text-xl text-gray-500 font-serif italic">
-               {selectedPost.excerpt}
-             </p>
-           </div>
+            {/* Author Tag */}
+            <div className="flex justify-center items-center gap-2 mb-8 text-sm">
+              <span className="text-gray-500">Authored by</span>
+              <span className="font-bold text-weg-navy border-b border-weg-gold pb-0.5">{selectedPost.author}</span>
+            </div>
 
-           <div className="w-20 h-1 bg-weg-gold mx-auto mb-12"></div>
+            <p className="text-xl text-gray-500 font-serif italic">
+              {selectedPost.excerpt}
+            </p>
+          </div>
 
-           {/* Content */}
-           <div className="prose prose-lg prose-slate mx-auto font-sans leading-relaxed text-weg-slate">
-             {selectedPost.content.split('\n').map((paragraph, idx) => {
-               const p = paragraph.trim();
-               if (!p) return null;
-               
-               // Headers (###)
-               if (p.startsWith('###')) {
-                 return <h3 key={idx} className="text-2xl font-serif text-weg-navy font-bold mt-10 mb-4">{p.replace('###', '').trim()}</h3>;
-               }
-               
-               // Bullet points (* )
-               if (p.startsWith('* ')) {
-                  return (
-                    <ul key={idx} className="list-disc pl-5 mb-4">
-                      <li>{renderText(p.replace('* ', ''))}</li>
-                    </ul>
-                  )
-               }
+          <div className="w-20 h-1 bg-weg-gold mx-auto mb-12"></div>
 
-               // Numbered lists (1. , 2. )
-               if (/^\d+\./.test(p)) {
-                 return <p key={idx} className="ml-4 mb-2 font-medium text-weg-navy">{renderText(p)}</p>
-               }
-               
-               // Regular paragraph with bold support
-               return <p key={idx} className="mb-6">{renderText(p)}</p>;
-             })}
-           </div>
+          {/* Content */}
+          <div className="prose prose-lg prose-slate mx-auto font-sans leading-relaxed text-weg-slate">
+            {selectedPost.content.split('\n').map((paragraph, idx) => {
+              const p = paragraph.trim();
+              if (!p) return null;
 
-           {/* Footer of Article */}
-           <div className="mt-20 pt-10 border-t border-gray-100 text-center">
-             <h4 className="font-serif text-2xl text-weg-navy mb-6">Want to discuss this further?</h4>
-             <Button variant="outline" onClick={() => window.location.hash = 'contact'}>Start a Conversation</Button>
-           </div>
+              // Headers (###)
+              if (p.startsWith('###')) {
+                return <h3 key={idx} className="text-2xl font-serif text-weg-navy font-bold mt-10 mb-4">{p.replace('###', '').trim()}</h3>;
+              }
+
+              // Bullet points (* )
+              if (p.startsWith('* ')) {
+                return (
+                  <ul key={idx} className="list-disc pl-5 mb-4">
+                    <li>{renderText(p.replace('* ', ''))}</li>
+                  </ul>
+                )
+              }
+
+              // Numbered lists (1. , 2. )
+              if (/^\d+\./.test(p)) {
+                return <p key={idx} className="ml-4 mb-2 font-medium text-weg-navy">{renderText(p)}</p>
+              }
+
+              // Regular paragraph with bold support
+              return <p key={idx} className="mb-6">{renderText(p)}</p>;
+            })}
+          </div>
+
+          {/* Footer of Article */}
+          <div className="mt-20 pt-10 border-t border-gray-100 text-center">
+            <h4 className="font-serif text-2xl text-weg-navy mb-6">Want to discuss this further?</h4>
+            <Button variant="outline" onClick={() => window.location.hash = 'contact'}>Start a Conversation</Button>
+          </div>
         </article>
       </div>
     );
@@ -99,6 +101,7 @@ export const Insights: React.FC = () => {
   // List View
   return (
     <div className="pt-24 pb-20 bg-white min-h-screen">
+      <SEO title="Field Notes" description="Observations on strategy, data culture, and decision making." />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mb-16 fade-in">
           <span className="text-weg-gold font-bold uppercase tracking-wider text-xs block mb-3">Thinking</span>
@@ -111,29 +114,29 @@ export const Insights: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-           {INSIGHTS.map((post) => (
-             <article key={post.id} className="group cursor-pointer fade-in flex flex-col h-full" onClick={() => setSelectedPost(post)}>
-               <div className="border-t border-weg-gold pt-6 flex flex-col flex-grow">
-                 <div className="flex justify-between items-center mb-4 text-xs text-gray-500 uppercase tracking-wider">
-                   <span>{post.category}</span>
-                   <span>{post.readTime}</span>
-                 </div>
-                 <h2 className="font-serif text-2xl text-weg-navy font-bold mb-3 group-hover:text-weg-gold transition-colors">
-                   {post.title}
-                 </h2>
-                 <p className="text-weg-slate text-sm mb-6 leading-relaxed line-clamp-3">
-                   {post.excerpt}
-                 </p>
-                 
-                 <div className="mt-auto flex justify-between items-center">
-                    <span className="text-xs font-medium text-gray-400">By {post.author}</span>
-                    <span className="text-xs font-bold text-weg-navy underline decoration-transparent group-hover:decoration-weg-navy underline-offset-4 transition-all">
-                      Read Article
-                    </span>
-                 </div>
-               </div>
-             </article>
-           ))}
+          {INSIGHTS.map((post) => (
+            <article key={post.id} className="group cursor-pointer fade-in flex flex-col h-full" onClick={() => setSelectedPost(post)}>
+              <div className="border-t border-weg-gold pt-6 flex flex-col flex-grow">
+                <div className="flex justify-between items-center mb-4 text-xs text-gray-500 uppercase tracking-wider">
+                  <span>{post.category}</span>
+                  <span>{post.readTime}</span>
+                </div>
+                <h2 className="font-serif text-2xl text-weg-navy font-bold mb-3 group-hover:text-weg-gold transition-colors">
+                  {post.title}
+                </h2>
+                <p className="text-weg-slate text-sm mb-6 leading-relaxed line-clamp-3">
+                  {post.excerpt}
+                </p>
+
+                <div className="mt-auto flex justify-between items-center">
+                  <span className="text-xs font-medium text-gray-400">By {post.author}</span>
+                  <span className="text-xs font-bold text-weg-navy underline decoration-transparent group-hover:decoration-weg-navy underline-offset-4 transition-all">
+                    Read Article
+                  </span>
+                </div>
+              </div>
+            </article>
+          ))}
         </div>
       </div>
     </div>

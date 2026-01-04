@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { HelmetProvider } from 'react-helmet-async';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { Home } from './pages/Home';
@@ -36,22 +37,24 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="font-sans antialiased text-weg-slate bg-weg-canvas selection:bg-weg-gold selection:text-weg-navy flex flex-col min-h-screen">
-      <Navbar currentPage={currentPage} setPage={navigate} />
-      
-      <main className="flex-grow">
-        {currentPage === 'home' && <Home setPage={navigate} />}
-        {currentPage === 'services' && <Services setPage={navigate} />}
-        {currentPage === 'work' && <Work />}
-        {currentPage === 'about' && <About setPage={navigate} />}
-        {currentPage === 'insights' && <Insights />}
-        {currentPage === 'contact' && <Contact />}
-        {currentPage === 'privacy' && <Legal page="privacy" />}
-        {currentPage === 'terms' && <Legal page="terms" />}
-      </main>
+    <HelmetProvider>
+      <div className="font-sans antialiased text-weg-slate bg-weg-canvas selection:bg-weg-gold selection:text-weg-navy flex flex-col min-h-screen">
+        <Navbar currentPage={currentPage} setPage={navigate} />
 
-      <Footer setPage={navigate} />
-    </div>
+        <main className="flex-grow">
+          {currentPage === 'home' && <Home setPage={navigate} />}
+          {currentPage === 'services' && <Services setPage={navigate} />}
+          {currentPage === 'work' && <Work />}
+          {currentPage === 'about' && <About setPage={navigate} />}
+          {currentPage === 'insights' && <Insights />}
+          {currentPage === 'contact' && <Contact />}
+          {currentPage === 'privacy' && <Legal page="privacy" />}
+          {currentPage === 'terms' && <Legal page="terms" />}
+        </main>
+
+        <Footer setPage={navigate} />
+      </div>
+    </HelmetProvider>
   );
 };
 

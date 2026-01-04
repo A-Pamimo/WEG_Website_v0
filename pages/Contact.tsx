@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { SEO } from '../components/SEO';
 import { Button } from '../components/Button';
 import { BRAND } from '../constants';
 
@@ -16,9 +17,10 @@ export const Contact: React.FC = () => {
 
   return (
     <div className="pt-24 pb-20 bg-weg-navy min-h-screen flex items-center">
+      <SEO title="Contact" description="Start a conversation with World's Edge Group." />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-20">
-          
+
           <div className="text-white">
             <span className="text-weg-gold font-bold uppercase tracking-wider text-xs block mb-3">Get in Touch</span>
             <h1 className="font-serif text-4xl md:text-5xl font-semibold mb-6">
@@ -27,16 +29,16 @@ export const Contact: React.FC = () => {
             <p className="text-xl text-gray-300 leading-relaxed mb-12">
               Whether you need an impact report, a strategy brief, or just better visibility into your data—start with a conversation.
             </p>
-            
+
             <div className="space-y-6">
-               <div>
-                 <h4 className="text-sm font-bold text-weg-gold uppercase tracking-wider mb-2">Email</h4>
-                 <p className="text-white text-lg">{BRAND.contactEmail}</p>
-               </div>
-               <div>
-                 <h4 className="text-sm font-bold text-weg-gold uppercase tracking-wider mb-2">Office</h4>
-                 <p className="text-gray-300">Remote-First Studio<br/>Based in Canada</p>
-               </div>
+              <div>
+                <h4 className="text-sm font-bold text-weg-gold uppercase tracking-wider mb-2">Email</h4>
+                <p className="text-white text-lg">{BRAND.contactEmail}</p>
+              </div>
+              <div>
+                <h4 className="text-sm font-bold text-weg-gold uppercase tracking-wider mb-2">Office</h4>
+                <p className="text-gray-300">Remote-First Studio<br />Based in Canada</p>
+              </div>
             </div>
           </div>
 
