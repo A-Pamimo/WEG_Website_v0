@@ -60,32 +60,68 @@ export const Insights: React.FC = () => {
 
           {/* Content */}
           <div className="prose prose-lg prose-slate mx-auto font-sans leading-relaxed text-weg-slate">
-            {selectedPost.content.split('\n').map((paragraph, idx) => {
-              const p = paragraph.trim();
-              if (!p) return null;
+            {(() => {
+              const lines = selectedPost.content.split('\n').map(l => l.trim()).filter(l => l);
+              const elements: JSX.Element[] = [];
+              let i = 0;
 
-              // Headers (###)
-              if (p.startsWith('###')) {
-                return <h3 key={idx} className="text-2xl font-serif text-weg-navy font-bold mt-10 mb-4">{p.replace('###', '').trim()}</h3>;
+              while (i < lines.length) {
+                const line = lines[i];
+
+                // Headers (###)
+                if (line.startsWith('###')) {
+                  elements.push(
+                    <h3 key={`h3-${i}`} className="text-2xl font-serif text-weg-navy font-bold mt-10 mb-4">
+                      {line.replace('###', '').trim()}
+                    </h3>
+                  );
+                  i++;
+                }
+                // Bullet points (* ) - group consecutive bullets
+                else if (line.startsWith('* ')) {
+                  const bullets: string[] = [];
+                  while (i < lines.length && lines[i].startsWith('* ')) {
+                    bullets.push(lines[i].replace('* ', ''));
+                    i++;
+                  }
+                  elements.push(
+                    <ul key={`ul-${i}`} className="list-disc pl-5 mb-6 space-y-2">
+                      {bullets.map((bullet, bi) => (
+                        <li key={bi}>{renderText(bullet)}</li>
+                      ))}
+                    </ul>
+                  );
+                }
+                // Numbered lists (1. , 2. ) - group consecutive numbers
+                else if (/^\d+\./.test(line)) {
+                  const items: string[] = [];
+                  while (i < lines.length && /^\d+\./.test(lines[i])) {
+                    items.push(lines[i]);
+                    i++;
+                  }
+                  elements.push(
+                    <ol key={`ol-${i}`} className="list-decimal pl-5 mb-6 space-y-2">
+                      {items.map((item, ii) => (
+                        <li key={ii} className="font-medium text-weg-navy">
+                          {renderText(item.replace(/^\d+\.\s*/, ''))}
+                        </li>
+                      ))}
+                    </ol>
+                  );
+                }
+                // Regular paragraph with bold support
+                else {
+                  elements.push(
+                    <p key={`p-${i}`} className="mb-6">
+                      {renderText(line)}
+                    </p>
+                  );
+                  i++;
+                }
               }
 
-              // Bullet points (* )
-              if (p.startsWith('* ')) {
-                return (
-                  <ul key={idx} className="list-disc pl-5 mb-4">
-                    <li>{renderText(p.replace('* ', ''))}</li>
-                  </ul>
-                )
-              }
-
-              // Numbered lists (1. , 2. )
-              if (/^\d+\./.test(p)) {
-                return <p key={idx} className="ml-4 mb-2 font-medium text-weg-navy">{renderText(p)}</p>
-              }
-
-              // Regular paragraph with bold support
-              return <p key={idx} className="mb-6">{renderText(p)}</p>;
-            })}
+              return elements;
+            })()}
           </div>
 
           {/* Footer of Article */}
