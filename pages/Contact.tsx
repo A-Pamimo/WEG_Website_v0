@@ -6,13 +6,39 @@ import { BRAND } from '../constants';
 export const Contact: React.FC = () => {
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus('submitting');
-    // Simulate server action
-    setTimeout(() => {
+
+    // Get form data
+    const form = e.target as HTMLFormElement;
+    const formData = new FormData(form);
+    const data = {
+      name: formData.get('name') as string,
+      email: formData.get('email') as string,
+      message: formData.get('message') as string
+    };
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
       setStatus('success');
-    }, 1500);
+      form.reset();
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      setStatus('idle'); // Or add an error state if you wish
+      alert('Something went wrong. Please try again.');
+    }
   };
 
   return (
@@ -56,15 +82,15 @@ export const Contact: React.FC = () => {
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
                   <label className="block text-sm font-bold text-weg-navy mb-2">Name</label>
-                  <input required type="text" className="w-full px-4 py-3 bg-weg-surface border border-gray-200 focus:outline-none focus:border-weg-navy transition-colors" placeholder="Jane Doe" />
+                  <input required name="name" type="text" className="w-full px-4 py-3 bg-weg-surface border border-gray-200 focus:outline-none focus:border-weg-navy transition-colors" placeholder="Jane Doe" />
                 </div>
                 <div>
                   <label className="block text-sm font-bold text-weg-navy mb-2">Email</label>
-                  <input required type="email" className="w-full px-4 py-3 bg-weg-surface border border-gray-200 focus:outline-none focus:border-weg-navy transition-colors" placeholder="jane@organization.org" />
+                  <input required name="email" type="email" className="w-full px-4 py-3 bg-weg-surface border border-gray-200 focus:outline-none focus:border-weg-navy transition-colors" placeholder="jane@organization.org" />
                 </div>
                 <div>
                   <label className="block text-sm font-bold text-weg-navy mb-2">What are you trying to solve?</label>
-                  <textarea required rows={4} className="w-full px-4 py-3 bg-weg-surface border border-gray-200 focus:outline-none focus:border-weg-navy transition-colors" placeholder="We need an economic impact report for..."></textarea>
+                  <textarea required name="message" rows={4} className="w-full px-4 py-3 bg-weg-surface border border-gray-200 focus:outline-none focus:border-weg-navy transition-colors" placeholder="We need an economic impact report for..."></textarea>
                 </div>
                 <Button fullWidth disabled={status === 'submitting'}>
                   {status === 'submitting' ? 'Sending...' : 'Send Inquiry'}
